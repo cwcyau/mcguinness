@@ -1,0 +1,3 @@
+This repository contains code associated with the publication McGuinness et al. (2010) "Code associated with Presynaptic NMDARs in the hippocampus facilitate transmitter release at theta frequency" (http://www.ncbi.nlm.nih.gov/pubmed/21172613).
+
+An example data file is contained in the folder data/ and an analysis can be run by executing the example script "runSimTest.m".
