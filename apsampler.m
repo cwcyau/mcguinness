@@ -467,8 +467,10 @@ u_vec = u_vec(range, :);
 res_vec = res_vec(range, :);
 z_vec = z_vec(:, :, range);
 p_vec = p_vec(range, :);
+lambda_d_vec = lambda_d_vec(range, :);
 
 
-save(outfile, 'd_vec', 'm_vec', 'u_vec', 'res_vec', 'z_vec', 'p_vec', 'sampleNames', 'groups', 'cellId', 'nSamples', 'Y', 's_vec');
+
+save(outfile, 'lambda_d_vec', 'd_vec', 'm_vec', 'u_vec', 'res_vec', 'z_vec', 'p_vec', 'sampleNames', 'groups', 'cellId', 'nSamples', 'Y', 's_vec');
 
 %print(outfileplot, '-depsc', '-r300');

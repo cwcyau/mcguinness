@@ -12,8 +12,8 @@ plotfile = 'output/Nork.pdf';
 summaryfile = 'output/Nork-summary.txt';
 
 % program options
-options.maxIters = 50000;
-options.burnin = 10000;
+options.maxIters = 500;
+options.burnin = 100;
 options.thin = 1;
 
 % run bayesian sampling 

@@ -63,7 +63,7 @@ nCells = length(cellNames);
 if nargin > 3
 fid = fopen(summaryfile, 'wt');
 
-	fprintf(fid, 'Sample,Parameter,Mean,Median,Lower,Upper\n');
+	fprintf(fid, 'Sample,Parameter,Mean,Median,Lower,Upper,Comment\n');
 
 	p_lower = quantile(p_vec, 0.05);
 	p_upper = quantile(p_vec, 0.95);
@@ -71,11 +71,29 @@ fid = fopen(summaryfile, 'wt');
 	p_mean = mean(p_vec);
 	
 	for i = 1 : nSamples		
-		fprintf(fid, '%s,p,%g,%g,%g,%g\n', sampleNames{i}, p_mean(i), p_median(i), p_lower(i), p_upper(i));
+		fprintf(fid, '%s,p,%g,%g,%g,%g,%s\n', sampleNames{i}, p_mean(i), p_median(i), p_lower(i), p_upper(i), 'Probability of large event');
 	end
+	
+	u_lower = quantile(u_vec, 0.05);
+	u_upper = quantile(u_vec, 0.95);
+	u_median = quantile(u_vec, 0.5);
+	u_mean = mean(u_vec);
+	
+	for i = 1 : nSamples		
+		fprintf(fid, '%s,group amplitude,%g,%g,%g,%g,%s\n', sampleNames{i}, u_mean(i), u_median(i), u_lower(i), u_upper(i), 'Group amplitude');
+	end	
+
+	lambda_d_lower = quantile(lambda_d_vec, 0.05);
+	lambda_d_upper = quantile(lambda_d_vec, 0.95);
+	lambda_d_median = quantile(lambda_d_vec, 0.5);
+	lambda_d_mean = mean(lambda_d_vec);
+			
+	fprintf(fid, '%s,lambda_d,%g,%g,%g,%g,%s\n', 'All', lambda_d_mean(1), lambda_d_median(1), lambda_d_lower(1), lambda_d_upper(1), 'Increase in amplitude for large event');
+
+end
 
 fclose(fid);
-end
+
 
 
 range = 1 : size(u_vec, 1);
