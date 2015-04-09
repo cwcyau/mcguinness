@@ -1,4 +1,4 @@
-function makeplots(datfile, resultsfile, outfile)
+function makeplots(datfile, resultsfile, outfile, summaryfile)
 
 rand('state', 1);
 randn('state', 1);
@@ -57,7 +57,25 @@ nGroups = length(unique(groups));
 cellNames = unique(cellId);
 nCells = length(cellNames);
 
+%
+% output summary statistics to file
+%
+if nargin > 3
+fid = fopen(summaryfile, 'wt');
 
+	fprintf(fid, 'Sample,Parameter,Mean,Median,Lower,Upper\n');
+
+	p_lower = quantile(p_vec, 0.05);
+	p_upper = quantile(p_vec, 0.95);
+	p_median = quantile(p_vec, 0.5);
+	p_mean = mean(p_vec);
+	
+	for i = 1 : nSamples		
+		fprintf(fid, '%s,p,%g,%g,%g,%g\n', sampleNames{i}, p_mean(i), p_median(i), p_lower(i), p_upper(i));
+	end
+
+fclose(fid);
+end
 
 
 range = 1 : size(u_vec, 1);
