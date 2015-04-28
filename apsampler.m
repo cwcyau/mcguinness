@@ -1,9 +1,21 @@
-function gibbsampler(infile, outfile, options)
+function options = gibbsampler(infile, outfile, options)
 
 if nargin < 3
 	options.burnin = 10000;
 	options.thin = 10;
 	options.maxIters = 100000;
+	options.a = 1;
+	options.b = 10;
+end
+if nargin == 3
+	if isfield(options, 'u') & isfield(options, 'v')
+		lam = (1-options.u)/options.u;
+		options.a = (1/(1+lam))*( lam/(options.v*(1+lam)^2) - 1 );
+		options.b = lam*options.a;
+	else
+		options.a = 1;
+		options.b = 10;	
+	end
 end
 
 rand('state', 1);
@@ -14,7 +26,12 @@ col{2} = 'r';
 col{3} = 'b';
 
 % read in data
-[sample, cellNo, y] = textread(infile, '%s %n %n', 'headerlines', 1, 'delimiter', '\t');
+if exist(infile, 'file') 
+	[sample, cellNo, y] = textread(infile, '%s %n %n', 'headerlines', 1, 'delimiter', '\t');
+else
+	disp(['Error! Data file: ' infile ' does not exist Please check that the correct directory/file name has been entered.']);
+	return;
+end
 
 sampleNames = [];
 sampleNames{1} = 'Control';
@@ -84,8 +101,8 @@ r_m = 1/(var(Ymean(:)));
 lambda_d = 0;
 r_d = 1/var(Y(:));
 
-p_a = ones(1, nGroups);
-p_b = 10*ones(1, nGroups);
+p_a = options.a*ones(1, nGroups);
+p_b = options.b*ones(1, nGroups);
 
 
 % initialise parameters
@@ -116,7 +133,6 @@ lambda_m_vec = zeros(options.maxIters, 	1,		'single');
 r_d_vec 	= zeros(options.maxIters, 	1,		'single');
 r_u_vec 	= zeros(options.maxIters, 	1,		'single');
 r_m_vec 	= zeros(options.maxIters, 	1,		'single');
-
 
 for it = 1 : options.maxIters
 
@@ -362,7 +378,6 @@ for it = 1 : options.maxIters
 	p_a_vec(it, :) = p_a;
 	p_b_vec(it, :) = p_b;
 
-
 end
 
 range = (options.burnin+1) : options.thin : options.maxIters;
@@ -469,8 +484,6 @@ z_vec = z_vec(:, :, range);
 p_vec = p_vec(range, :);
 lambda_d_vec = lambda_d_vec(range, :);
 
-
-
-save(outfile, 'lambda_d_vec', 'd_vec', 'm_vec', 'u_vec', 'res_vec', 'z_vec', 'p_vec', 'sampleNames', 'groups', 'cellId', 'nSamples', 'Y', 's_vec');
+save(outfile, 'lambda_d_vec', 'd_vec', 'm_vec', 'u_vec', 'res_vec', 'z_vec', 'p_vec', 'sampleNames', 'groups', 'cellId', 'nSamples', 'Y', 's_vec', 'options');
 
 %print(outfileplot, '-depsc', '-r300');

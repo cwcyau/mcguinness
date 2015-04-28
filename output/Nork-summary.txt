@@ -1,6 +1,6 @@
 Sample,Parameter,Mean,Median,Lower,Upper,Comment
-Control,p,0.175745,0.17434,0.120089,0.234976,Probability of large event
-Norketamine,p,0.0113506,0.00851863,0.00109149,0.0324962,Probability of large event
-Control,group amplitude,80.3883,81.1421,67.1746,95.9344,Group amplitude
-Norketamine,group amplitude,70.0018,70.8099,55.4935,85.5857,Group amplitude
-All,lambda_d,40.0078,40.3633,33.8965,45.2235,Increase in amplitude for large event
+Control,p,0.176029,0.173696,0.121979,0.235463,Probability of large event
+Norketamine,p,0.00368489,0.000668408,4.27579e-09,0.016746,Probability of large event
+Control,group amplitude,76.1093,76.853,51.6748,96.4734,Group amplitude
+Norketamine,group amplitude,65.9512,66.8375,41.8531,86.4951,Group amplitude
+All,lambda_d,40.7973,40.9571,33.9999,47.0279,Increase in amplitude for large event
